@@ -6,5 +6,5 @@
 </template>
 
 <script setup>
-    import TodosComponent from '@/components/TodosComponent.vue'
+    import TodosComponent from '@/components/Todos/index.vue'
 </script>

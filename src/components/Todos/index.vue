@@ -122,21 +122,29 @@
         }, 3000);
     };
 
-    // 檢查是否登入有效
+    /**
+     * 檢查是否登入有效
+     * @returns {Promise<void>}
+     */
     const checkUser = async() => {
+        // 取得 Cookie 中的 Token
         token.value = document.cookie.replace(/(?:(?:^|.*;\s*)userTodo\s*\=\s*([^;]*).*$)|^.*$/, "$1", );
         if (token.value) {
             try {
+                //向 Server 發送 GET 請求
                 const res = await axios.get(`${hexCheckout}`, {
                     headers: {
                         Authorization: token.value,
                     },
                 });
                 if (res.data.status == true) {
+                    // 設定使用者名稱
                     userName.value = res.data.nickname;
+                    // 取得待辦事項
                     await getTodos();
                 }
             } catch (err) {
+                // 登入失效
                 Swal.fire({
                     title: '登入失效',
                     icon: 'error',
@@ -145,12 +153,14 @@
                     confirmButtonColor: '#808080',
                     timer: 1500
                 });
+                // 3 秒後登出
                 setTimeout(() => {
                     document.cookie = "userTodo=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
                     router.push({ name: 'login' });
                 }, 3000);
             }
         } else {
+            // Cookie 中沒有 Token
             Swal.fire({
                 title: '登入失效',
                 icon: 'error',
@@ -159,6 +169,7 @@
                 confirmButtonColor: '#808080',
                 timer: 1500
             });
+            // 3 秒後登出
             setTimeout(() => {
                 document.cookie = "userTodo=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
                 router.push({ name: 'login' });

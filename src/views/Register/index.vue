@@ -1,5 +1,5 @@
 <script setup>
-    import RegisterComponent from '@/components/RegisterComponent.vue'
+    import RegisterComponent from '@/components/Register/index.vue'
 </script>
 
 <template>

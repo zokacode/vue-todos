@@ -32,6 +32,21 @@
     const pwdRegister = ref('');
     const pwdCheck = ref('');
 
+    /**
+     * 註冊
+     *
+     * 1. 使用 email、nickname、password 3 個欄位
+     * 2. 使用 POST 請求將資料傳到 Server
+     * 3. Server 會回傳一個 status 的物件
+     * 4. 如果 status == true, 代表註冊成功
+     * 5. 如果 status == false, 代表註冊失敗
+     *
+     * @param {string} emailRegister - 註冊 email
+     * @param {string} nicknameRegister - 註冊暱稱
+     * @param {string} pwdRegister - 註冊密碼
+     * @param {string} pwdCheck - 再次輸入密碼
+     * @returns {Promise<void>}
+     */
     const signUp = async() => {
         try {
             const res = await axios.post(`${hexSignUp}`, {
@@ -39,7 +54,12 @@
                 nickname: nicknameRegister.value,
                 password: pwdRegister.value,
             });
+
+            // Server 會回傳一個 status 的物件
+            // 如果 status == true, 代表註冊成功
+            // 如果 status == false, 代表註冊失敗
             if (res.data.status == true) {
+                // 註冊成功
                 Swal.fire({
                     title: '註冊成功',
                     icon: 'success',
@@ -47,11 +67,25 @@
                     confirmButtonColor: '#3085d6',
                     timer: 1500
                 });
+
+                // 3 秒後跳回登入頁面
                 setTimeout(() => {
                     router.push({ name: 'login' });
                 }, 3000);
+            } else {
+                // 註冊失敗
+                Swal.fire({
+                    title: '註冊失敗',
+                    icon: 'error',
+                    text: res.data.message,
+                    confirmButtonText: '關閉',
+                    confirmButtonColor: '#808080',
+                    timer: 1500
+                });
             }
         } catch (err) {
+            // 如果 Server 連線失敗
+            // 就顯示錯誤訊息
             Swal.fire({
                 title: '註冊失敗',
                 icon: 'error',

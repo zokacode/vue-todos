@@ -17,7 +17,7 @@
 
 <script setup>
   import { RouterLink, RouterView } from 'vue-router'
-  import HelloWorld from '@/components/HelloWorld.vue'
+  import HelloWorld from '@/components/Test/index.vue'
   import '@/assets/base.css';
 </script>
 
