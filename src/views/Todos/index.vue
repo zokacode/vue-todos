@@ -1,10 +1,10 @@
 <template>
-    <!-- ToDo List -->
-    <div id="todoListPage" class="bg-half">
-        <TodosComponent />
-    </div>
+  <!-- TodoList -->
+  <div id="todoListPage" class="bg-half">
+      <TodosComponent />
+  </div>
 </template>
 
 <script setup>
-    import TodosComponent from '@/components/Todos/index.vue'
+  import TodosComponent from '@/components/Todos/index.vue'
 </script>
